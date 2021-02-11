@@ -1,3 +1,0 @@
-virtualenv==20.4.2
-Flask==1.1.2
-python-dotenv
