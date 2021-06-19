@@ -1,7 +1,14 @@
 from flask import Flask,render_template,jsonify
 from markupsafe import escape
 import sys
+import json
+
+
 app = Flask(__name__)
+with open('books.json') as books_json:
+  data = json.load(books_json)
+
+
 books=[
 	{
 		'id':1,
@@ -41,7 +48,13 @@ def book_title(title):
     print(book,file=sys.stderr)
     return jsonify(book)
 
-
+#une route qui retourne un book selon son titre 
+@app.route('/api/book_json/<title>',methods=["GET"])
+def books_json_title(title):
+    print(title,file=sys.stderr)
+    book = [b for b in data if b["title"].find(escape(title)) !=-1]
+    print(book,file=sys.stderr)
+    return jsonify(book)
 
 
 if __name__ == "__main__":
